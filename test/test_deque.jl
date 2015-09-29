@@ -11,6 +11,15 @@ q = Deque{Int}()
 @test q.blksize == DataStructures.DEFAULT_DEQUEUE_BLOCKSIZE
 @test_throws ErrorException front(q)
 @test_throws ErrorException back(q)
+@test length(sprint(dump,q)) >= 0
+
+@test typeof(deque(Int)) == typeof(Deque{Int}())
+
+q = DataStructures.DequeBlock{Int}(0,0)
+@test length(q) == 0
+@test capacity(q) == 0
+@test isempty(q)
+@test length(sprint(show,q)) >= 0
 
 q = Deque{Int}(3)
 @test length(q) == 0
@@ -34,10 +43,16 @@ for i = 1 : n
 
     @test front(q) == 1
     @test back(q) == i
-
+    
+    k = 1
+    for j in q
+        @test j == k
+        k += 1
+    end
     cq = collect(q)
     @test isa(cq, Vector{Int})
     @test cq == collect(1:i)
+    @test length(sprint(show,q)) >= 0
 end
 
 # pop back
@@ -144,4 +159,12 @@ q = Deque{Int}(1)
 push!(q,1)
 @test !isempty(q)
 empty!(q)
+@test isempty(q)
+
+#empty!
+q = Deque{Int}(1)
+push!(q,1)
+push!(q,2)
+@test length(sprint(dump,q)) >= 0
+@test typeof(empty!(q)) == typeof(Deque{Int}())
 @test isempty(q)

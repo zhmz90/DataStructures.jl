@@ -1,5 +1,5 @@
 tests = ["deque",
-         "sorteddict",
+         "sortedcontainers",
          "stack_and_queue",
          "accumulator",
          "classifiedcollections",
@@ -10,7 +10,8 @@ tests = ["deque",
          "ordereddict",
          "orderedset",
          "trie",
-         "list"]
+         "list",
+         "multidict"]
 
 for t in tests
     fp = joinpath(dirname(@__FILE__), "test_$t.jl")
